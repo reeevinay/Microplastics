@@ -29,10 +29,28 @@ DATABASE = 'microplastic_analysis.db'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(RESULTS_FOLDER, exist_ok=True)
 
-# Initialize components
-analyzer = MicroplasticAnalyzer()
-comparator = DataComparator()
-recommender = SolutionRecommender()
+# Initialize components lazily to avoid startup issues
+analyzer = None
+comparator = None
+recommender = None
+
+def get_analyzer():
+    global analyzer
+    if analyzer is None:
+        analyzer = MicroplasticAnalyzer()
+    return analyzer
+
+def get_comparator():
+    global comparator
+    if comparator is None:
+        comparator = DataComparator()
+    return comparator
+
+def get_recommender():
+    global recommender
+    if recommender is None:
+        recommender = SolutionRecommender()
+    return recommender
 
 # Initialize database
 def init_db():
@@ -57,6 +75,10 @@ def init_db():
 def index():
     return render_template('index.html')
 
+@app.route('/health')
+def health():
+    return jsonify({'status': 'healthy', 'message': 'Microplastic Analysis API is running'}), 200
+
 @app.route('/upload', methods=['POST'])
 def upload_file():
     if 'file' not in request.files:
@@ -73,13 +95,13 @@ def upload_file():
         
         # Analyze the image
         try:
-            analysis_result = analyzer.analyze_image(filepath)
+            analysis_result = get_analyzer().analyze_image(filepath)
             
             # Compare with internet data
-            comparison_data = comparator.compare_with_online_data(analysis_result)
+            comparison_data = get_comparator().compare_with_online_data(analysis_result)
             
             # Get recommendations
-            recommendations = recommender.get_recommendations(analysis_result, comparison_data)
+            recommendations = get_recommender().get_recommendations(analysis_result, comparison_data)
             
             # Convert numpy types to native Python types for JSON serialization
             def convert_numpy_types(obj):

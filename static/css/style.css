@@ -167,8 +167,8 @@ body {
 
 /* Fix chart text overflow */
 .plotly .legend {
-    font-size: 12px !important;
-    max-width: 200px !important;
+    font-size: 11px !important;
+    max-width: 180px !important;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
 }
@@ -177,18 +177,67 @@ body {
     white-space: nowrap !important;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
-    max-width: 150px !important;
+    max-width: 140px !important;
+    display: inline-block !important;
+}
+
+/* Chart pie labels */
+.plotly .pie .text {
+    font-size: 10px !important;
+    max-width: 80px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
 }
 
 /* Responsive chart improvements */
+@media (max-width: 1200px) {
+    .plotly .legend {
+        font-size: 10px !important;
+        max-width: 150px !important;
+    }
+    
+    .plotly .legendtext {
+        max-width: 120px !important;
+    }
+}
+
 @media (max-width: 768px) {
     #typeChart, #sizeChart {
         height: 300px;
     }
     
     .plotly .legend {
-        font-size: 10px !important;
-        max-width: 120px !important;
+        font-size: 9px !important;
+        max-width: 100px !important;
+    }
+    
+    .plotly .legendtext {
+        max-width: 80px !important;
+    }
+    
+    .plotly .pie .text {
+        font-size: 8px !important;
+        max-width: 60px !important;
+    }
+}
+
+@media (max-width: 576px) {
+    #typeChart, #sizeChart {
+        height: 250px;
+    }
+    
+    .plotly .legend {
+        font-size: 8px !important;
+        max-width: 80px !important;
+    }
+    
+    .plotly .legendtext {
+        max-width: 60px !important;
+    }
+    
+    .plotly .pie .text {
+        font-size: 7px !important;
+        max-width: 50px !important;
     }
 }
 
@@ -270,6 +319,17 @@ body {
 }
 
 /* Responsive Design */
+@media (max-width: 1200px) {
+    .container-fluid {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    
+    .card {
+        margin-bottom: 1rem;
+    }
+}
+
 @media (max-width: 768px) {
     .hero-section {
         min-height: 50vh;
@@ -280,17 +340,133 @@ body {
         font-size: 2.5rem;
     }
     
+    .hero-section .lead {
+        font-size: 1rem;
+    }
+    
     .upload-area {
         padding: 2rem 1rem;
+    }
+    
+    .upload-area h4 {
+        font-size: 1.2rem;
     }
     
     .summary-card {
         margin-bottom: 1rem;
     }
     
+    .summary-card h3 {
+        font-size: 2rem;
+    }
+    
     .btn {
         padding: 0.5rem 1.5rem;
         font-size: 0.9rem;
+    }
+    
+    .card-header h3 {
+        font-size: 1.3rem;
+    }
+    
+    .card-header h5 {
+        font-size: 1.1rem;
+    }
+    
+    .navbar-brand {
+        font-size: 1.1rem;
+    }
+    
+    .history-item {
+        padding: 1rem;
+    }
+    
+    .history-item .filename {
+        font-size: 0.95rem;
+    }
+    
+    .recommendation-item {
+        padding: 1rem;
+    }
+    
+    .recommendation-item h6 {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-section h1 {
+        font-size: 2rem;
+    }
+    
+    .hero-section .lead {
+        font-size: 0.9rem;
+    }
+    
+    .upload-area {
+        padding: 1.5rem 0.5rem;
+    }
+    
+    .upload-area h4 {
+        font-size: 1.1rem;
+    }
+    
+    .upload-area p {
+        font-size: 0.9rem;
+    }
+    
+    .summary-card h3 {
+        font-size: 1.8rem;
+    }
+    
+    .summary-card i {
+        font-size: 2.5rem;
+    }
+    
+    .btn {
+        padding: 0.4rem 1rem;
+        font-size: 0.8rem;
+    }
+    
+    .card-header h3 {
+        font-size: 1.2rem;
+    }
+    
+    .card-header h5 {
+        font-size: 1rem;
+    }
+    
+    .navbar-brand {
+        font-size: 1rem;
+    }
+    
+    .history-item {
+        padding: 0.8rem;
+    }
+    
+    .history-item .filename {
+        font-size: 0.9rem;
+    }
+    
+    .history-item .date {
+        font-size: 0.8rem;
+    }
+    
+    .recommendation-item {
+        padding: 0.8rem;
+    }
+    
+    .recommendation-item h6 {
+        font-size: 0.95rem;
+    }
+    
+    .recommendation-item p {
+        font-size: 0.85rem;
+    }
+    
+    .effectiveness-badge {
+        font-size: 0.7rem;
+        padding: 0.2rem 0.5rem;
     }
 }
 

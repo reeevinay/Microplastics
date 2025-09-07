@@ -152,10 +152,21 @@ class MicroplasticAnalyzer {
             return;
         }
 
-        // Truncate long type names for better display
+        // Truncate long type names for better display based on screen size
+        const screenWidth = window.innerWidth;
+        let maxLength = 20;
+        
+        if (screenWidth < 576) {
+            maxLength = 8;  // Very small screens
+        } else if (screenWidth < 768) {
+            maxLength = 12; // Small screens
+        } else if (screenWidth < 1200) {
+            maxLength = 16; // Medium screens
+        }
+        
         const truncatedTypes = types.map(type => {
-            if (type.length > 20) {
-                return type.substring(0, 17) + '...';
+            if (type.length > maxLength) {
+                return type.substring(0, maxLength - 3) + '...';
             }
             return type;
         });
@@ -176,18 +187,29 @@ class MicroplasticAnalyzer {
             hovertemplate: '<b>%{label}</b><br>Count: %{value}<br>Percentage: %{percent}<extra></extra>'
         }];
 
+        // Responsive layout based on screen size
+        const isMobile = screenWidth < 768;
+        const isSmallMobile = screenWidth < 576;
+        
         const layout = {
             title: {
                 text: 'Microplastic Types Distribution',
-                font: { size: 14 }
+                font: { size: isSmallMobile ? 12 : isMobile ? 13 : 14 }
             },
-            font: { size: 11 },
-            margin: { t: 60, b: 40, l: 40, r: 40 },
+            font: { size: isSmallMobile ? 9 : isMobile ? 10 : 11 },
+            margin: { 
+                t: isSmallMobile ? 50 : isMobile ? 55 : 60, 
+                b: isSmallMobile ? 30 : isMobile ? 35 : 40, 
+                l: isSmallMobile ? 30 : isMobile ? 35 : 40, 
+                r: isSmallMobile ? 30 : isMobile ? 35 : 40 
+            },
             legend: {
-                orientation: 'v',
-                x: 1.05,
-                y: 0.5,
-                font: { size: 10 }
+                orientation: isMobile ? 'h' : 'v',
+                x: isMobile ? 0.5 : 1.05,
+                y: isMobile ? -0.1 : 0.5,
+                xanchor: isMobile ? 'center' : 'left',
+                yanchor: isMobile ? 'top' : 'middle',
+                font: { size: isSmallMobile ? 8 : isMobile ? 9 : 10 }
             },
             showlegend: true
         };
@@ -226,23 +248,33 @@ class MicroplasticAnalyzer {
             hovertemplate: '<b>%{x}</b><br>Particles: %{y}<extra></extra>'
         }];
 
+        // Responsive layout for size chart
+        const screenWidth = window.innerWidth;
+        const isMobile = screenWidth < 768;
+        const isSmallMobile = screenWidth < 576;
+        
         const layout = {
             title: {
                 text: 'Particle Size Distribution',
-                font: { size: 14 }
+                font: { size: isSmallMobile ? 12 : isMobile ? 13 : 14 }
             },
             xaxis: { 
                 title: 'Size Category',
-                titlefont: { size: 12 },
-                tickfont: { size: 11 }
+                titlefont: { size: isSmallMobile ? 10 : isMobile ? 11 : 12 },
+                tickfont: { size: isSmallMobile ? 9 : isMobile ? 10 : 11 }
             },
             yaxis: { 
                 title: 'Number of Particles',
-                titlefont: { size: 12 },
-                tickfont: { size: 11 }
+                titlefont: { size: isSmallMobile ? 10 : isMobile ? 11 : 12 },
+                tickfont: { size: isSmallMobile ? 9 : isMobile ? 10 : 11 }
             },
-            font: { size: 11 },
-            margin: { t: 60, b: 60, l: 60, r: 40 }
+            font: { size: isSmallMobile ? 9 : isMobile ? 10 : 11 },
+            margin: { 
+                t: isSmallMobile ? 50 : isMobile ? 55 : 60, 
+                b: isSmallMobile ? 50 : isMobile ? 55 : 60, 
+                l: isSmallMobile ? 50 : isMobile ? 55 : 60, 
+                r: isSmallMobile ? 30 : isMobile ? 35 : 40 
+            }
         };
 
         const config = {
@@ -544,6 +576,24 @@ async function viewHistoryDetails(analysisId) {
 // Initialize the application when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     new MicroplasticAnalyzer();
+    
+    // Add window resize listener for responsive charts
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+            // Re-render charts if they exist
+            const typeChart = document.getElementById('typeChart');
+            const sizeChart = document.getElementById('sizeChart');
+            
+            if (typeChart && typeChart.data) {
+                Plotly.redraw('typeChart');
+            }
+            if (sizeChart && sizeChart.data) {
+                Plotly.redraw('sizeChart');
+            }
+        }, 250);
+    });
 });
 
 // Smooth scrolling for navigation links

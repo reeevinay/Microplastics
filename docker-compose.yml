@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  microplastic-analyzer:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=production
+      - SECRET_KEY=your-secret-key-here
+    volumes:
+      - ./uploads:/app/uploads
+      - ./results:/app/results
+      - ./models:/app/models
+    restart: unless-stopped

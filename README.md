@@ -10,10 +10,6 @@ A web-based application for analyzing microplastic contamination in emission mic
 - **History Tracking**: Keep track of all your analyses
 - **Responsive Design**: Works on desktop, tablet, and mobile devices
 
-## 🚀 Live Demo
-
-Visit the live application: [https://your-username.github.io/Sensor](https://your-username.github.io/Sensor)
-
 ## 📱 How to Use
 
 1. **Upload Image**: Drag and drop or click to upload an emission microscopy image
@@ -127,15 +123,3 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - Plotly.js for interactive charts
 - Font Awesome for icons
 - The scientific community for microplastic research
-
-## 📞 Support
-
-If you encounter any issues or have questions:
-
-1. Check the [Issues](https://github.com/your-username/Sensor/issues) page
-2. Create a new issue with detailed description
-3. Include screenshots if applicable
-
----
-
-**Note**: This is a demo version for GitHub Pages. For full AI analysis capabilities, the complete Python backend with TensorFlow models is available in the `app_full.py` file.

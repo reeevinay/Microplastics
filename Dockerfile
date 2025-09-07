@@ -1,9 +1,10 @@
+# Use Python 3.11 slim image
 FROM python:3.11-slim
 
 # Set working directory
 WORKDIR /app
 
-# Install system dependencies
+# Install system dependencies for OpenCV and other packages
 RUN apt-get update && apt-get install -y \
     libglib2.0-0 \
     libsm6 \
@@ -11,6 +12,18 @@ RUN apt-get update && apt-get install -y \
     libxrender-dev \
     libgomp1 \
     libglib2.0-0 \
+    libgtk-3-0 \
+    libavcodec-dev \
+    libavformat-dev \
+    libswscale-dev \
+    libv4l-dev \
+    libxvidcore-dev \
+    libx264-dev \
+    libjpeg-dev \
+    libpng-dev \
+    libtiff-dev \
+    libatlas-base-dev \
+    python3-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements first for better caching
@@ -23,14 +36,15 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Create necessary directories
-RUN mkdir -p uploads results models
+RUN mkdir -p uploads results
 
 # Expose port
-EXPOSE 5000
+EXPOSE 8080
 
 # Set environment variables
 ENV FLASK_APP=app.py
 ENV FLASK_ENV=production
+ENV PORT=8080
 
 # Run the application
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8080", "--workers", "1", "--timeout", "120", "app:app"]

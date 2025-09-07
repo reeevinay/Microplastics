@@ -1,154 +1,141 @@
 # Microplastic Analysis System
 
-An advanced AI-powered system for analyzing microplastic images from emission microscopy and providing actionable solutions for environmental protection.
+A web-based application for analyzing microplastic contamination in emission microscopy images using AI-powered detection and analysis.
 
-## Features
+## 🌟 Features
 
-- **AI-Powered Image Analysis**: Uses pre-trained machine learning models to identify different types of microplastics
-- **Real-time Data Comparison**: Compares analysis results with global databases and research findings
-- **Actionable Recommendations**: Provides personalized solutions for microplastic reduction and prevention
-- **Interactive Web Interface**: Modern, responsive web application for easy image upload and result visualization
-- **Analysis History**: Tracks and stores previous analyses for comparison and trend analysis
+- **AI-Powered Analysis**: Advanced machine learning models for microplastic identification
+- **Interactive Visualization**: Real-time charts and graphs showing analysis results
+- **Comprehensive Reports**: Detailed analysis with recommendations and solutions
+- **History Tracking**: Keep track of all your analyses
+- **Responsive Design**: Works on desktop, tablet, and mobile devices
 
-## Supported Microplastic Types
+## 🚀 Live Demo
 
+Visit the live application: [https://your-username.github.io/Sensor](https://your-username.github.io/Sensor)
+
+## 📱 How to Use
+
+1. **Upload Image**: Drag and drop or click to upload an emission microscopy image
+2. **Analyze**: Click "Analyze Image" to start the AI-powered analysis
+3. **View Results**: See detailed analysis including:
+   - Particle count and types
+   - Size distribution charts
+   - Risk assessment
+   - Actionable recommendations
+4. **Track History**: View all your previous analyses
+
+## 🛠️ Technology Stack
+
+- **Frontend**: HTML5, CSS3, JavaScript (ES6+)
+- **UI Framework**: Bootstrap 5
+- **Charts**: Plotly.js
+- **Icons**: Font Awesome
+- **Storage**: LocalStorage for demo data
+
+## 📁 Project Structure
+
+```
+├── index.html              # Main application page
+├── static/
+│   ├── css/
+│   │   └── style.css       # Custom styles
+│   ├── js/
+│   │   └── app.js          # Main application logic
+│   └── images/             # Static images
+├── templates/              # Flask templates (for backend version)
+├── app.py                  # Flask backend (for full version)
+├── requirements.txt        # Python dependencies
+└── README.md              # This file
+```
+
+## 🔧 Setup for GitHub Pages
+
+1. **Fork this repository**
+2. **Enable GitHub Pages**:
+   - Go to your repository settings
+   - Scroll to "Pages" section
+   - Select "Deploy from a branch"
+   - Choose "main" branch and "/ (root)" folder
+   - Click "Save"
+
+3. **Your site will be available at**:
+   `https://your-username.github.io/Sensor`
+
+## 🎯 Demo Mode
+
+This GitHub Pages version runs in **demo mode** with simulated analysis results. The application:
+
+- ✅ **Fully functional UI** - All features work perfectly
+- ✅ **Realistic demo data** - Generates realistic microplastic analysis results
+- ✅ **Interactive charts** - Plotly.js visualizations work completely
+- ✅ **History tracking** - Uses localStorage to save analysis history
+- ✅ **Responsive design** - Works on all devices
+
+## 🔬 Analysis Features
+
+### Detected Microplastic Types
 - Polyethylene (PE)
 - Polypropylene (PP)
 - Polystyrene (PS)
 - Polyvinyl Chloride (PVC)
 - Polyethylene Terephthalate (PET)
-- Polyamide (Nylon)
+- Nylon
 - Acrylic
-- Unknown/Other
 
-## Installation
+### Analysis Results Include
+- **Particle Count**: Total number of microplastics detected
+- **Type Distribution**: Pie chart showing types found
+- **Size Distribution**: Bar chart showing particle sizes
+- **Risk Assessment**: Environmental risk level (Low/Medium/High)
+- **Confidence Scores**: AI confidence in detection accuracy
 
-1. **Clone the repository**:
-   ```bash
-   git clone <repository-url>
-   cd microplastic-analyzer
-   ```
+### Recommendations
+- **Prevention Solutions**: Actionable steps to reduce microplastics
+- **Implementation Plans**: Timeline for implementing solutions
+- **Cost Analysis**: Cost and effectiveness ratings
 
-2. **Install dependencies**:
-   ```bash
-   pip install -r requirements.txt
-   ```
+## 🌐 Browser Compatibility
 
-3. **Run the application**:
-   ```bash
-   python app.py
-   ```
+- ✅ Chrome 80+
+- ✅ Firefox 75+
+- ✅ Safari 13+
+- ✅ Edge 80+
 
-4. **Access the web interface**:
-   Open your browser and navigate to `http://localhost:5000`
+## 📱 Mobile Support
 
-## Usage
+- ✅ Responsive design
+- ✅ Touch-friendly interface
+- ✅ Optimized charts for mobile
+- ✅ Fast loading on mobile networks
 
-### Web Interface
-
-1. **Upload Image**: Drag and drop or click to upload an emission microscopy image
-2. **Analyze**: Click the "Analyze Image" button to start the AI analysis
-3. **View Results**: Review the analysis results including:
-   - Particle count and types
-   - Size distribution
-   - Risk assessment
-   - Comparison with baseline data
-4. **Get Recommendations**: Access personalized solutions for microplastic reduction
-
-### API Endpoints
-
-- `POST /upload`: Upload and analyze an image
-- `GET /history`: Retrieve analysis history
-
-## System Architecture
-
-### Components
-
-1. **MicroplasticAnalyzer**: Core AI model for image analysis and particle classification
-2. **DataComparator**: Compares results with online databases and research
-3. **SolutionRecommender**: Generates personalized recommendations
-4. **Web Interface**: Flask-based frontend for user interaction
-
-### Database
-
-The system uses SQLite to store:
-- Analysis results
-- Particle classifications
-- Confidence scores
-- Recommendations
-- Timestamps
-
-## Technical Details
-
-### Image Processing Pipeline
-
-1. **Preprocessing**: Image resizing, normalization, and format conversion
-2. **Particle Detection**: Contour detection and particle isolation
-3. **Classification**: AI model prediction for each detected particle
-4. **Post-processing**: Result aggregation and confidence scoring
-
-### AI Model
-
-- **Architecture**: Convolutional Neural Network (CNN)
-- **Input Size**: 224x224 pixels
-- **Classes**: 8 microplastic types
-- **Framework**: TensorFlow/Keras
-
-## File Structure
-
-```
-microplastic-analyzer/
-├── app.py                      # Main Flask application
-├── microplastic_analyzer.py    # Core analysis engine
-├── data_comparator.py          # Data comparison module
-├── solution_recommender.py     # Recommendation system
-├── requirements.txt            # Python dependencies
-├── templates/
-│   └── index.html             # Web interface template
-├── static/
-│   ├── css/
-│   │   └── style.css          # Custom styles
-│   ├── js/
-│   │   └── app.js             # Frontend JavaScript
-│   └── images/                # Static images
-├── uploads/                   # Uploaded images
-├── results/                   # Analysis results
-└── models/                    # AI model files
-```
-
-## Configuration
-
-### Environment Variables
-
-- `FLASK_ENV`: Set to 'development' for debug mode
-- `UPLOAD_FOLDER`: Directory for uploaded images (default: 'uploads')
-- `MAX_FILE_SIZE`: Maximum file size in bytes (default: 10MB)
-
-### Model Configuration
-
-The system automatically creates a demo model if no pre-trained model is found. For production use, replace the demo model with a properly trained model.
-
-## Contributing
+## 🤝 Contributing
 
 1. Fork the repository
 2. Create a feature branch
 3. Make your changes
-4. Add tests if applicable
+4. Test thoroughly
 5. Submit a pull request
 
-## License
+## 📄 License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-## Support
+## 🙏 Acknowledgments
 
-For support and questions, please open an issue in the repository or contact the development team.
+- Bootstrap for the responsive UI framework
+- Plotly.js for interactive charts
+- Font Awesome for icons
+- The scientific community for microplastic research
 
-## Future Enhancements
+## 📞 Support
 
-- Integration with real-time research databases
-- Advanced visualization tools
-- Batch processing capabilities
-- Mobile application
-- API for third-party integrations
-- Enhanced AI models with more microplastic types
+If you encounter any issues or have questions:
+
+1. Check the [Issues](https://github.com/your-username/Sensor/issues) page
+2. Create a new issue with detailed description
+3. Include screenshots if applicable
+
+---
+
+**Note**: This is a demo version for GitHub Pages. For full AI analysis capabilities, the complete Python backend with TensorFlow models is available in the `app_full.py` file.

@@ -88,28 +88,121 @@ class MicroplasticAnalyzer {
         document.getElementById('results').classList.add('d-none');
 
         try {
-            const formData = new FormData();
-            formData.append('file', this.selectedFile);
+            // Simulate analysis delay
+            await new Promise(resolve => setTimeout(resolve, 2000));
 
-            const response = await fetch('/upload', {
-                method: 'POST',
-                body: formData
-            });
+            // Generate demo results
+            const result = this.generateDemoResults();
 
-            const result = await response.json();
-
-            if (result.success) {
-                this.displayResults(result);
-                this.loadHistory(); // Refresh history
-            } else {
-                this.showAlert(result.error || 'Analysis failed.', 'danger');
-            }
+            this.displayResults(result);
+            this.addToHistory(result);
         } catch (error) {
             console.error('Analysis error:', error);
-            this.showAlert('Network error. Please try again.', 'danger');
+            this.showAlert('Analysis failed. Please try again.', 'danger');
         } finally {
             this.showLoading(false);
         }
+    }
+
+    generateDemoResults() {
+        // Generate realistic demo data
+        const microplasticTypes = [
+            'Polyethylene (PE)',
+            'Polypropylene (PP)', 
+            'Polystyrene (PS)',
+            'Polyvinyl Chloride (PVC)',
+            'Polyethylene Terephthalate (PET)',
+            'Nylon',
+            'Acrylic'
+        ];
+
+        const detectedTypes = microplasticTypes.slice(0, Math.floor(Math.random() * 4) + 2);
+        const counts = detectedTypes.map(() => Math.floor(Math.random() * 50) + 10);
+        const confidenceScores = detectedTypes.map(() => Math.random() * 0.3 + 0.7);
+
+        const sizeCategories = {
+            'Micro (< 1mm)': Math.floor(Math.random() * 30) + 20,
+            'Small (1-5mm)': Math.floor(Math.random() * 20) + 10,
+            'Medium (5-10mm)': Math.floor(Math.random() * 10) + 5
+        };
+
+        const riskLevels = ['Low', 'Medium', 'High'];
+        const riskLevel = riskLevels[Math.floor(Math.random() * riskLevels.length)];
+
+        const analysis = {
+            particle_count: counts.reduce((a, b) => a + b, 0),
+            types: detectedTypes,
+            counts: counts,
+            confidence_scores: confidenceScores,
+            average_confidence: confidenceScores.reduce((a, b) => a + b, 0) / confidenceScores.length,
+            size_distribution: sizeCategories
+        };
+
+        const comparison = {
+            baseline_comparison: {
+                'Polyethylene (PE)': {
+                    sample_percentage: Math.floor(Math.random() * 40) + 20,
+                    concentration_status: 'Elevated'
+                },
+                'Polypropylene (PP)': {
+                    sample_percentage: Math.floor(Math.random() * 30) + 15,
+                    concentration_status: 'Normal'
+                }
+            },
+            risk_assessment: {
+                environmental_risk: riskLevel
+            }
+        };
+
+        const recommendations = {
+            priority_level: riskLevel === 'High' ? 'Very High' : riskLevel === 'Medium' ? 'High' : 'Medium',
+            prevention_solutions: [
+                {
+                    solution: 'Implement Advanced Filtration System',
+                    description: 'Install multi-stage filtration to capture microplastics at source',
+                    effectiveness: 'High',
+                    cost: 'Medium',
+                    implementation: '2-4 weeks'
+                },
+                {
+                    solution: 'Switch to Biodegradable Alternatives',
+                    description: 'Replace plastic materials with biodegradable options',
+                    effectiveness: 'Very High',
+                    cost: 'High',
+                    implementation: '1-3 months'
+                },
+                {
+                    solution: 'Enhanced Monitoring Protocol',
+                    description: 'Implement regular testing and monitoring procedures',
+                    effectiveness: 'Medium',
+                    cost: 'Low',
+                    implementation: '1-2 weeks'
+                }
+            ],
+            implementation_plan: {
+                'immediate': {
+                    name: 'Immediate Actions (1-2 weeks)',
+                    actions: [
+                        { solution: 'Install basic filtration' },
+                        { solution: 'Start monitoring protocol' }
+                    ]
+                },
+                'short_term': {
+                    name: 'Short-term Goals (1-3 months)',
+                    actions: [
+                        { solution: 'Upgrade filtration system' },
+                        { solution: 'Begin material replacement' }
+                    ]
+                }
+            }
+        };
+
+        return {
+            success: true,
+            analysis: analysis,
+            comparison: comparison,
+            recommendations: recommendations
+        };
     }
 
     displayResults(result) {
@@ -393,14 +486,40 @@ class MicroplasticAnalyzer {
 
     async loadHistory() {
         try {
-            const response = await fetch('/history');
-            const history = await response.json();
+            // Load from localStorage
+            const history = JSON.parse(localStorage.getItem('microplastic_history') || '[]');
             this.displayHistory(history);
         } catch (error) {
             console.error('Error loading history:', error);
             document.getElementById('historyContent').innerHTML = 
                 '<p class="text-muted text-center">Error loading history</p>';
         }
+    }
+
+    addToHistory(result) {
+        const historyItem = {
+            id: Date.now(),
+            filename: this.selectedFile.name,
+            date: new Date().toISOString(),
+            microplastic_types: result.analysis.types,
+            particle_count: result.analysis.particle_count,
+            risk_level: result.comparison.risk_assessment.environmental_risk
+        };
+
+        // Load existing history
+        const history = JSON.parse(localStorage.getItem('microplastic_history') || '[]');
+        
+        // Add new item to beginning
+        history.unshift(historyItem);
+        
+        // Keep only last 10 items
+        const limitedHistory = history.slice(0, 10);
+        
+        // Save back to localStorage
+        localStorage.setItem('microplastic_history', JSON.stringify(limitedHistory));
+        
+        // Refresh display
+        this.displayHistory(limitedHistory);
     }
 
     displayHistory(history) {

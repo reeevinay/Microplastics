@@ -56,7 +56,7 @@ A web-based application for analyzing microplastic contamination in emission mic
    - Click "Save"
 
 3. **Your site will be available at**:
-   `https://reeevinay.github.io/Microplastics/`
+   https://reeevinay.github.io/Microplastics/
 
 ## 🎯 Demo Mode
 
